@@ -1,0 +1,37 @@
+body
+{
+	font-family: Verdana, sans-serif;
+	color: #4d3b37;
+	font-size: large;
+	background-color: #fefefe;
+}
+
+.notTooWide
+{
+	width: 805px;
+}
+
+h1
+{
+	font-size: larger;
+}
+
+code
+{
+	color: #75c7fa;
+}
+
+pre
+{
+	color: #75c7fa;
+}
+
+a:link
+{
+	color: #fc3e30;
+}
+
+a:visited
+{
+	color: #a80d05;
+}

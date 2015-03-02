@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+		<meta charset="UTF-8">
+		<title>GeoloTweets: Formatting the results</title>
+	</head>
+	<body>
+  <div class="notTooWide">
+    <h1>Formatting the results</h1>
+		<p>A couple of changes to the data, and we'll be ready to rock. First, we want to specify that the data returned from the twitter API is a JSON object. (PHP provides a handy set of functions for manipulating JSON objects with <code>json_encode</code> and <code>json_decode</code>. The PHP manual provides information on using <a href="http://php.net/manual/en/function.json-encode.php">json_encode</a> and <a href="http://php.net/manual/en/function.json-decode.php">json_decode</a>.) Let's update our code so that the data returned from the twitter API is encoded as a JSON object:
+
+<pre>
+$tweets = json_encode($connection->GET("search/tweets", array("q" => "geocode:" . $latitude . "," . $longitude . ",5mi")));
+</pre>
+
+    <p>And we'll immediately turn around and decode that JSON object into an associative array using json_decode with 'true' passed as the second argument:</p>
+
+<pre>
+$tweetsArray = json_decode($tweets, true);
+</pre>
+
+  <p>Now that the data is in a format we can work with, we need to decide which elements we'd like to select for display, and which we'd like to ignore. There's a great deal of data associated with each 'statuses' element returned by the twitter API -- <a href="twitter-API-array-results.html">view a sample of the data returned for a single 'statuses' element</a>.</p>
+  <p>We're going to pull three elements from the array and present them to the user as a single string: [username] tweeted [text] at [time&date]. In order to output the data in the desired format, we'll use a <code>foreach</code> loop:</p>
+
+<pre>
+foreach($tweetsArray["statuses"] as $element)
+  {
+    echo "<p>" . $element["user"]["screen_name"] . " tweeted " . $element["text"] . " at " . $element["created_at"] . "</p>";
+  }
+</pre>
+
+  <p>And there you have it. We've successfully captured a user's geolocation data, passed that information into a query string for the twitter API, authenticated to the API, and formatted the return data.</p>
+  <p><a href="http://web.engr.oregonstate.edu/~mcdaniad/geolotwitter/geolotweets.php">View Geolotwitter in action</a>.</p>
+  <p>There are plenty of ways to enhance the functionality we've gone over here. You could allow the user to tweak the radius (currently set to a static 5mi), return more data from the results to the user, allow a user to add addtional query information (search terms, etc), filter the results, and so on. I may iterate on some of those ideas and update this guide in the future.</p>
+  <p><a href="customizing-the-twitter-API-query.html">Previous: Customizing the twitter API query</a> | <a href="formatting-the-results.html">Next: Return to the introduction</a></p>
+  </div>
+	</body>
+</html>

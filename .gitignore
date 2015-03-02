@@ -1,0 +1,12 @@
+# ignore file with password value
+storedInfo.php
+
+# ignore images
+access-tokens.png
+apply-twitter-api.png
+
+#ignore old files
+geolotweets-old.php
+GeoloTweets.docx
+p1.html
+p3.html

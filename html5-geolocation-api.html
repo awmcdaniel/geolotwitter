@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+		<meta charset="UTF-8">
+		<title>GeoloTweets: HTML5 Geolocation API</title>
+	</head>
+	<body>
+    <div class="notTooWide">
+    <h1>HTML5 Geolocation API</h1>
+		<p>The <a href="http://www.w3.org/TR/geolocation-API">HTML5 Geolocation Specification</a> is available from WC3.</p>
+		<p>The API explains how to create and work with a <code>Position</code> object, which contains information about a user's geographical location.</p>
+		<p>There’s some cool stuff in the API. First, you can find a user’s position using the <code>getCurrentPosition()</code> method. When successful, that method will return a <code>Position</code> object that contains two attributes: coordinates and a timestamp.</p>
+		<p>The coordinates interface should provide access to longitude, latitude, and accuracy regardless of device. If the device supports it (for example, a smartphone with an altimeter, compass, accelerometer), the interface will also provide values for altitude and altitude accuracy, heading, and speed. </p>
+		<p>The <code>getCurrentPosition()</code> method accepts up to three arguments. The first argument tells the method what to do when an attempt to get the current location is successful. The second argument tells the method what to do on failure. The third argument accepts options, such as requesting higher accuracy results (<code>enableHighAccuracy</code>), specifying the amount of time between calling the method and receiving a successful result (<code>timeout</code>), or specifying when the method must request new location data rather than relying on cached information (<code>maximumAge</code>).</p>
+		<p>There is a second type of information provided via the <code>watchPosition()</code> method, which obtains the current position of the user (like the <code>getCurrentPosition()</code> method above) and then continues to monitor the user’s location, updating when the position changes. Although we won’t be using this method, it seems like something that would be useful for a wide variety of applications using smartphones: navigation, geofencing, providing contextual data in a park or museum depending on user location, etc.</p>
+		<p>For our implementation, we’ll be using the <code>getCurrentPosition()</code> method, and we’re only concerned with the longitude and latitude attributes of the coordinates. We’ll be passing two arguments: what to do on a successful call, and what to do on an error.</p>
+		<p>WC3 Schools provides a nice <a href="http://www.w3schools.com/html/html5_geolocation.asp">basic implementation of the geolocation API</a> in javascript, which we’ll adapt for our project.</p>
+		<p>
+<code>&lt;button onclick=&quot;getLocation()&quot;&gt;Let's Geolotwitter!&lt;/button&gt;</code><br />
+<code>&lt;div id=&quot;displayLocation&quot;&gt;&lt;/div&gt;</code>
+</pre>
+		<p>Here we've created a button to call the <code>getLocation()</code> function, and declared a div by id where we'll place an error message if there's a problem.</p>
+<pre>
+var geo = document.getElementById("displayLocation");
+		
+function getLocation()
+{
+  if (navigator.geolocation)
+  {
+   	navigator.geolocation.getCurrentPosition(sendPosition, showError);
+  }
+  else
+  {
+   	geo.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+</pre>
+
+		<p>This block of code creates the <code>geo</code> variable, which references the div we declared above by id. it also creates the <code>getLocation()</code> function that we called from button above, which accesses the geolocation API and calls the <code>getCurrentPosition()</code> method if it's available. If the geolocation API isn't available, it provides an error message instead.</p>
+<pre>		
+function sendPosition(position) 
+{
+  window.location.href="geolotweets.php?latitude=" + position.coords.latitude + "&longitude=" + position.coords.longitude;
+}
+</pre>
+		<p>If you look at the <code>getCurrentPosition()</code> above, you'll see that we passed it two arguments. This code corresponds to the first argument, and defines what we do if the method is successful and returns geolocation data. Here, we're sending a GET request back to the calling page (geolotweets.php) with the latitude and longitude encoded in the URL.</p>
+
+<pre>
+function showError(error)
+{
+  switch(error.code)
+  {
+    case error.PERMISSION_DENIED:
+      geo.innerHTML = "User denied the request for Geolocation."
+      break;
+    case error.POSITION_UNAVAILABLE:
+      geo.innerHTML = "Location information is unavailable."
+      break;
+    case error.TIMEOUT:
+      geo.innerHTML = "The request to get user location timed out."
+      break;
+    case error.UNKNOWN_ERROR:
+      geo.innerHTML = "An unknown error occurred."
+      break;
+  }
+}
+</pre>
+		<p>Finally, the second argument passed to the <code>getCurrentPosition()</code> method, which tells it what to do if there's an error when it attempts to get geolocation data.</p>
+      <p><a href="sending-a-request-to-the-twitter-API.html">Previous: Sending a request to the twitter API</a> | <a href="customizing-the-twitter-API-query.html">Next: Customizing the twitter API query</a></p>
+  </div>
+	</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<meta charset="UTF-8">
+		<title>GeoloTweets: Sending a request to the twitter API</title>
+	</head>
+	<body>
+	<div class="notTooWide">
+	<h1>Sending a request to the twitter API</h1>
+	<p>Before we send a request to twitter, we need to ensure that <a href="obtaining-twitter-API-information.html">the tokens twitter gave us</a> remain private. As it says on the settings page, "This key should never be human-readable in your application." PHP gives us an easy way to keep the information private, by placing those tokens into variables and then keeping that information serverside.</p>
+	<p>We'll create a simple PHP file called storedInfo.php, which will include the following information:</p>
+
+<pre>
+$consumerkey = "yourConsumerKey";
+$consumersecret = "yourConsumerSecret";
+$accesstoken = "yourAccessToken";
+$accesstokensecret = "yourAccessTokenSecret";
+</pre>
+
+	<p>For the four variables above, you'll want to replace the dummy values I've outlined in the quotes (like "yourConsumerKey") with the actual values twitter has provided, that are unique to your account.</p>
+	<p>In our final code, we'll need to add a single line:
+
+<pre>
+include 'storedInfo.php';
+</pre>
+
+	<p>That bit of code will allow us to use variables that contain our token data, such as <code>$consumerkey</code> without exposing our actual consumer key value.</p>
+	<p>Now we'll create a function (<a href="http://www.sitepoint.com/twitter-1-1-oauth-php/">credit to Craig Buckler</a> for providing the code we've adapted here) to create a new connection to the twitter API, and then we'll call that connection and place it in a variable.</p>
+
+<pre>
+function getConnectionWithAccessToken($cons_key, $cons_secret, $oauth_token, $oauth_token_secret) {
+	$connection = new TwitterOAuth($cons_key, $cons_secret, $oauth_token, $oauth_token_secret);
+	return $connection;
+}
+
+$connection = getConnectionWithAccessToken($consumerkey, $consumersecret, $accesstoken, $accesstokensecret);
+</pre>
+
+	<p>Now that we have a connection, we can send a query to the twitter API <a href="http://www.w3schools.com/tags/ref_httpmethods.asp">using the GET method</a>, and pass two arguments: the request type and the request parameters in the following format:</p>
+
+<pre>
+$tweets = $connection->GET("search/tweets", array("q" => "geocode:38.898748,-77.037684,5mi"));
+</pre>
+
+	<p>As you can see, we've placed the result of that query in a new variable, <code>$tweets</code>. The request type parameter we're using, GET search/tweets, can receive a number of parameters <a href="https://dev.twitter.com/rest/reference/get/search/tweets">as outlined in its documentation</a>.</p>
+	<p>In our code example above, we've requested a geocode with three elements, separated by commas: latitude (38.898748), longitude (-77.037684), and radius (5mi). This query will return tweets made within 5 miles of the White House in Washington, D.C.</p>
+	<p>We’re all set then, as long as we only want to search for tweets coming from near the White House!</p>
+	<p>For our purposes, we’re going to replace the longitude and latitude elements with variables, and we’ll pull in those variable values from the HTML5 Geolocation API. The result will be a custom twitter Search API query that provides tweets within a 5 mile radius of the user’s location.</p>
+	<p><a href="figuring-out-oauth.html">Previous: Figuring out OAuth</a> | <a href="html5-geolocation-api.html">Next: HTML5 Geolocation API</a></p>
+	</div>
+	</body>
+</html>

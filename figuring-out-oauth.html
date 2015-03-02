@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="style.css">
+		<meta charset="UTF-8">
+		<title>GeoloTweets: Figuring out OAuth</title>
+	</head>
+	<body>
+	<div class="notTooWide">
+	<h1>Figuring out OAuth</h1>
+	<p>twitter uses <a href="http://en.wikipedia.org/wiki/OAuth">OAuth</a> to ensure that programs are making authorized calls to its API. There’s a (large) set of <a href="https://dev.twitter.com/oauth/overview">documentation on twitter’s developer site devoted to authentication</a>. As you’ll see if you visit, there’s some pretty complex stuff going on with encoding, access tokens, and more.</p>
+	<p>Luckily for us, twitter recommends using a client library to handle the authentication, and maintains a <a href="https://dev.twitter.com/overview/api/twitter-libraries">list of libraries in different languages</a>. We’re going to use the <a href="https://github.com/abraham/twitteroauth">twitteroauth library</a> by Abraham Williams. Following the documentation available on Abraham’s <a href="https://twitteroauth.com/">TwitterOAuth site</a>, we download the latest release (0.5.1 as of the writing of this guide) and create a new directory on our server called twitteroauth. We then unpack the latest release to that directory.</p>
+	<p>We’ll need to include two lines at the start of our PHP code to access the library:
+	
+<pre>
+require "twitteroauth/autoload.php";
+
+use Abraham\TwitterOAuth\TwitterOAuth;
+</pre>
+
+	<p>In the above example, <code>twitteroauth/autoload.php</code> should be replaced with the relative path to the autoload.php file on your server.</p>
+	<p>Now we can get on with our request!</p>
+	<p><a href="obtaining-twitter-API-information.html">Previous: Obtaining twitter API information</a> | <a href="sending-a-request-to-the-twitter-API.html">Next: Sending a request to the twitter API</a></p>
+	</div>
+	</body>
+</html>

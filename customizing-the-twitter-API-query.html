@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+		<meta charset="UTF-8">
+		<title>GeoloTweets: Customizing the twitter API query</title>
+	</head>
+	<body>
+  <div class="notTooWide">
+    <h1>Customizing the twitter API query</h1>
+		<p>With the <code>sendPosition()</code> function we created, if HTML5s geolocation API is supported by the browser/device (and there are no errors), we'll be redirected to our original page with the latitude and longitude at our fingertips.</p> 
+    <p>With a bit of PHP, we can grab those values that the geolocation API got for us and place them into variables:</p>
+
+<pre>
+$latitude = htmlspecialchars($_GET["latitude"]);
+    
+$longitude = htmlspecialchars($_GET["longitude"]);
+</pre>
+
+    <p>Now that we've got the variables, we can modify the <a href="sending-a-request-to-the-twitter-API.html">twitter API query we constructed earlier</a> so that it's dynamic and changes depending on the user's geolocation.</p>
+
+<pre>
+$tweets = $connection->GET("search/tweets", array("q" => "geocode:" . $latitude . "," . $longitude . ",5mi"));
+</pre>
+
+    <p>And in order to make sure we're not sending poorly formed queries and dumping errors into our page, we'll wrap the code we've created on this page in an if statement, to make sure that we've already passed ourselves the coordinate data.</p>
+
+<pre>
+if ($_GET["latitude"] && $_GET["longitude"]) {
+  //if we got our latitude and longitude, pull them from the $_GET object,
+  //place them in variables, make the connection to the twitter API and
+  //pop the variables into our twitter API query
+}
+</pre>
+    <p><a href="html5-geolocation-api.html">Previous: HTML5 Geolocation API</a> | <a href="formatting-the-results.html">Next: Formatting the results</a></p>
+  </div>
+	</body>
+</html>
