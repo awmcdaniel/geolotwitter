@@ -26,14 +26,15 @@ $tweetsArray = json_decode($tweets, true);
 <pre>
 foreach($tweetsArray["statuses"] as $element)
   {
-    echo "<p>" . $element["user"]["screen_name"] . " tweeted " . $element["text"] . " at " . $element["created_at"] . "</p>";
+    echo "&lt;p&gt;" . $element["user"]["screen_name"] . " tweeted " . $element["text"] . " at " . $element["created_at"] . "&lt;/p&gt;";
   }
 </pre>
 
   <p>And there you have it. We've successfully captured a user's geolocation data, passed that information into a query string for the twitter API, authenticated to the API, and formatted the return data.</p>
   <p><a href="http://web.engr.oregonstate.edu/~mcdaniad/geolotwitter/geolotweets.php">View Geolotwitter in action</a>.</p>
+  <p><a href="https://github.com/awmcdaniel/geolotwitter/blob/master/geolotweets.php">View the Geolotwitter source code at GitHub</a>.</p>
   <p>There are plenty of ways to enhance the functionality we've gone over here. You could allow the user to tweak the radius (currently set to a static 5mi), return more data from the results to the user, allow a user to add addtional query information (search terms, etc), filter the results, and so on. I may iterate on some of those ideas and update this guide in the future.</p>
-  <p><a href="customizing-the-twitter-API-query.html">Previous: Customizing the twitter API query</a> | <a href="formatting-the-results.html">Next: Return to the introduction</a></p>
+  <p><a href="customizing-the-twitter-API-query.html">Previous: Customizing the twitter API query</a> | <a href="intro.html">Next: Return to the introduction</a></p>
   </div>
 	</body>
 </html>
